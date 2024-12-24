@@ -8,6 +8,7 @@ import PropertySearchBar from './components/PropertySearchBar'
 import PropertySearchPage from './components/PropertySearchPage'
 import PropertyDetails from './components/PropertyDetails'
 
+
 function App() {
   const [properties, setProperties] = useState([]);
 
@@ -15,10 +16,7 @@ function App() {
     const fetchData = async()=> {
       try {
         const data = await propertySalesData.propertySalesData();
-        if (data.error) {
-          throw new Error(data.error);
-        }
-    setProperties(properties);
+    setProperties(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -26,11 +24,15 @@ function App() {
     fetchData();
   },[]);
 
+  useEffect(() => {
+    console.log("Updated properties:", properties);
+  }, [properties]);
+
 
   return (
     <>
     <NavBar />
-    <h1>Hello World</h1>
+    <PropertySearchPage properties={properties}/>
     <Footer />
     </>
   )

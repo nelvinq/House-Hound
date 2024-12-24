@@ -5,13 +5,16 @@ const URA_TOKEN = `${import.meta.env.VITE_URA_TOKEN}`
 const propertySalesData = async () => {
 
     try {
-        const res = await fetch(URA_BASE_URL, {
-        headers: {
-            AccessKey: URA_API_KEY,
-            Token: URA_TOKEN,
-        }});
+        const res = await fetch("/api", {
+          headers: {
+              AccessKey: URA_API_KEY,
+              Token: URA_TOKEN,
+              "Accept": "application/json"
+          },
+        });
         const data = await res.json()
-        return data.records;
+        
+        return data.Result;
       } catch (error) {
         console.log(error);
       }
