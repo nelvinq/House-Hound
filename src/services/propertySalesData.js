@@ -1,5 +1,4 @@
 const URA_API_KEY = `${import.meta.env.VITE_URA_API_KEY}`
-const URA_TOKEN = `${import.meta.env.VITE_URA_TOKEN}`
 
 const propertySalesData = async (token) => {
 

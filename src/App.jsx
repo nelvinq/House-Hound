@@ -13,6 +13,7 @@ import PropertyDetails from './components/PropertyDetails'
 function App() {
   const [properties, setProperties] = useState([]);
   const [token, setToken] = useState("")
+  const [propertyDetails, setPropertyDetails] = useState([]);
 
   useEffect(()=>{
     if (token === "") {
@@ -50,10 +51,26 @@ function App() {
     console.log("Updated token:", token);
   }, [token]);
 
+  useEffect(() => {
+    console.log("Updated property details:", propertyDetails);
+  }, [propertyDetails]);
+
+  const handleDetails = async (project, street) => {
+    try {
+      const filteredDetails = properties.filter(
+        (property) => property.project === project && property.street === street
+      );
+      setPropertyDetails(filteredDetails);
+    } catch (error) {
+      console.error("Error fetching property details:", error);
+    }
+  };
+
   return (
     <>
     <NavBar />
-    <PropertySearchPage properties={properties}/>
+    <PropertyDetails propertyDetails={propertyDetails} />
+    <PropertySearchPage properties={properties} handleDetails={handleDetails}/>
     <Footer />
     </>
   )

@@ -1,6 +1,6 @@
 import Card from 'react-bootstrap/Card';
 
-const PropertySearchPage = ({ properties }) => {
+const PropertySearchPage = ({ properties, handleDetails }) => {
   return (
     <>
     <div className="listing">
@@ -14,7 +14,12 @@ const PropertySearchPage = ({ properties }) => {
                 <Card.Subtitle className="mb-2 text-muted" style={{fontStyle: 'italic'}}>
                  {property.street}
                 </Card.Subtitle>
-                <Card.Link href="#">More Details</Card.Link>
+                <Card.Link
+                href="#"
+                onClick={(e) => {
+                      e.preventDefault(); 
+                      handleDetails(property.project, property.street)}}>
+                        More Details</Card.Link>
               </Card.Body>
             </Card>
           </div>
