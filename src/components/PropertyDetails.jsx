@@ -1,5 +1,5 @@
 const PropertyDetails = ({propertyDetails}) => {
-    if (!propertyDetails || propertyDetails.length === 0) {
+    if (!propertyDetails || propertyDetails?.length === 0) {
         return <p>No propertyDetails available. Please select a property.</p>;
       }
     
@@ -22,7 +22,7 @@ const PropertyDetails = ({propertyDetails}) => {
               <strong>Coordinates:</strong> {property.x}, {property.y}
             </p>
             <h3>Transactions:</h3>
-        {property.transaction && property.transaction.length > 0 ? (
+        {property.transaction && property?.transaction?.length > 0 ? (
           <table>
             <thead>
               <tr>
