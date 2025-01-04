@@ -14,6 +14,8 @@ function App() {
   const [properties, setProperties] = useState([]);
   const [token, setToken] = useState("")
   const [propertyDetails, setPropertyDetails] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredProperties, setFilteredProperties] = useState([]);
 
   useEffect(()=>{
     if (token === "") {
@@ -34,7 +36,9 @@ function App() {
     const fetchData = async()=> {
       try {
         const data = await propertySalesData.propertySalesData(token);
+        const indexedData = data.map() // add in ID for property here to use for routing
     setProperties(data);
+    setFilteredProperties(data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -43,9 +47,40 @@ function App() {
   }
   },[token]);
 
+  const handleDetails = async (project, street) => {
+    try {
+      const selectedDetails = properties.filter(
+        (property) => property.project === project && property.street === street
+      );
+      setPropertyDetails(selectedDetails);
+    } catch (error) {
+      console.error("Error fetching property details:", error);
+    }
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.trim() === "") {
+      setFilteredProperties(properties);
+    } else {
+      setFilteredProperties(
+        properties.filter(
+          (property) =>
+            property.project.toLowerCase().includes(query.toLowerCase()) ||
+            property.street.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    }
+  };
+
+// Console.log for checking - to remove
   useEffect(() => {
     console.log("Updated properties:", properties);
   }, [properties]);
+
+  useEffect(() => {
+    console.log("Updated properties:", filteredProperties);
+  }, [filteredProperties]);
 
   useEffect(() => {
     console.log("Updated token:", token);
@@ -55,22 +90,12 @@ function App() {
     console.log("Updated property details:", propertyDetails);
   }, [propertyDetails]);
 
-  const handleDetails = async (project, street) => {
-    try {
-      const filteredDetails = properties.filter(
-        (property) => property.project === project && property.street === street
-      );
-      setPropertyDetails(filteredDetails);
-    } catch (error) {
-      console.error("Error fetching property details:", error);
-    }
-  };
-
   return (
     <>
     <NavBar />
     <PropertyDetails propertyDetails={propertyDetails} />
-    <PropertySearchPage properties={properties} handleDetails={handleDetails}/>
+    <PropertySearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
+    <PropertySearchPage filteredProperties={filteredProperties} handleDetails={handleDetails}/>
     <Footer />
     </>
   )

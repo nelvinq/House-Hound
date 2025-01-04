@@ -1,12 +1,14 @@
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
+//import the routes
 
-const PropertySearchPage = ({ properties, handleDetails }) => {
+const PropertySearchPage = ({ filteredProperties, handleDetails }) => {
   return (
     <>
-    <div className="listing">
-    <p><strong>Number of results: {properties.length}</strong></p>
-      {properties.length > 0 ? (
-        properties.map((property, index) => (
+    <div>
+    <p><strong>Number of results: {filteredProperties?.length}</strong></p>
+      {filteredProperties?.length > 0 ? (
+        filteredProperties.map((property, index) => (
           <div>
             <Card style={{ width: "100%", padding:"10px", borderBottom: "1px solid #ccc"}}>
               <Card.Body>
@@ -15,7 +17,6 @@ const PropertySearchPage = ({ properties, handleDetails }) => {
                  {property.street}
                 </Card.Subtitle>
                 <Card.Link
-                href="#"
                 onClick={(e) => {
                       e.preventDefault(); 
                       handleDetails(property.project, property.street)}}>
@@ -25,7 +26,7 @@ const PropertySearchPage = ({ properties, handleDetails }) => {
           </div>
         ))
       ) : (
-        <p>Loading properties...</p>
+        <p>Loading...</p>
       )}
     </div>
     </>
