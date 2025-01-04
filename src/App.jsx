@@ -1,51 +1,56 @@
-import { useState, useEffect } from 'react'
-import { Link, Route, Routes } from 'react-router-dom'
-import './App.css'
-import * as propertySalesData from "./services/propertySalesData"
-import * as getToken from "./services/getToken"
-import NavBar from './components/NavBar/NavBar'
-import Footer from './components/Footer/Footer'
-import PropertySearchBar from './components/PropertySearchBar'
-import PropertySearchPage from './components/PropertySearchPage'
-import PropertyDetails from './components/PropertyDetails'
-
+import { useState, useEffect } from "react";
+import { Link, Route, Routes } from "react-router-dom";
+import "./App.css";
+import * as propertySalesData from "./services/propertySalesData";
+import * as getToken from "./services/getToken";
+import NavBar from "./components/NavBar/NavBar";
+import Footer from "./components/Footer/Footer";
+import PropertySearchBar from "./components/PropertySearchBar";
+import PropertySearchPage from "./components/PropertySearchPage";
+import PropertyDetails from "./components/PropertyDetails/PropertyDetails";
+import FavoriteProperties from "./components/FavouriteProperties/FavoriteProperties";
 
 function App() {
   const [properties, setProperties] = useState([]);
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
   const [propertyDetails, setPropertyDetails] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProperties, setFilteredProperties] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (token === "") {
-    const fetchToken = async()=> {
-      try {
-        const data = await getToken.getToken();
-    setToken(data);
-    console.log("Updated token:", token);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+      const fetchToken = async () => {
+        try {
+          const data = await getToken.getToken();
+          setToken(data);
+          console.log("Updated token:", token);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchToken();
     }
-  };
-    fetchToken();
-  }},[]);
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (token !== "") {
-    const fetchData = async()=> {
-      try {
-        const data = await propertySalesData.propertySalesData(token);
-        const indexedData = data.map() // add in ID for property here to use for routing
-    setProperties(data);
-    setFilteredProperties(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+      const fetchData = async () => {
+        try {
+          const data = await propertySalesData.propertySalesData(token);
+          const indexedData = data.map((property, index) => ({
+            ...property,
+            id: index + 1,
+          }));
+          setProperties(indexedData);
+          setFilteredProperties(indexedData);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+      fetchData();
     }
-  };
-    fetchData();
-  }
-  },[token]);
+  }, [token]);
 
   const handleDetails = async (project, street) => {
     try {
@@ -73,7 +78,21 @@ function App() {
     }
   };
 
-// Console.log for checking - to remove
+  const handleAddFavorite = (property) => {
+    if (!favorites.find((fav) => fav.id === property.id)) {
+      setFavorites([...favorites, property]);
+    }
+  };
+
+  const handleRemoveFavorite = (propertyId) => {
+    setFavorites((prevFavorites) =>
+      prevFavorites.filter((fav) => fav.id !== propertyId))
+  };
+
+  const isFavorite = (propertyId) =>
+    favorites.some((fav) => fav.id === propertyId);
+
+  // Console.log for checking - to remove
   useEffect(() => {
     console.log("Updated properties:", properties);
   }, [properties]);
@@ -90,15 +109,26 @@ function App() {
     console.log("Updated property details:", propertyDetails);
   }, [propertyDetails]);
 
+  useEffect(() => {
+    console.log("Updated favorites:", favorites);
+  }, [favorites]);
+
   return (
     <>
-    <NavBar />
-    <PropertyDetails propertyDetails={propertyDetails} />
-    <PropertySearchBar searchQuery={searchQuery} handleSearch={handleSearch} />
-    <PropertySearchPage filteredProperties={filteredProperties} handleDetails={handleDetails}/>
-    <Footer />
+      <NavBar />
+      <div className="body">
+      <Routes>
+        <Route path="/" element={<PropertySearchPage filteredProperties={filteredProperties} handleDetails={handleDetails} />} />
+        <Route path='/detail' element={<PropertyDetails propertyDetails={propertyDetails} handleAddFavorite={handleAddFavorite}
+        handleRemoveFavorite={handleRemoveFavorite}
+        isFavorite={isFavorite}/>}/>
+        <Route path='/favorites' element={<FavoriteProperties favorites={favorites}
+        handleRemoveFavorite={handleRemoveFavorite} handleDetails={handleDetails}/>}/>
+      </Routes>
+      </div>
+      <Footer />
     </>
-  )
-};
+  );
+}
 
-export default App
+export default App;

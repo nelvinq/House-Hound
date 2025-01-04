@@ -3,7 +3,9 @@
   padding: 2rem;
 }
 
-
+.body{
+  margin-top: 50px;
+}
 .logo {
   height: 6em;
   padding: 1.5em;

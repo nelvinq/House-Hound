@@ -1,11 +1,15 @@
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
-//import the routes
+import { Link } from "react-router-dom";
+import PropertySearchBar from './PropertySearchBar';
 
-const PropertySearchPage = ({ filteredProperties, handleDetails }) => {
+const PropertySearchPage = ({ filteredProperties, handleDetails, searchQuery, handleSearch }) => {
   return (
     <>
     <div>
+    <PropertySearchBar
+        searchQuery={searchQuery}
+        handleSearch={handleSearch}
+      />
     <p><strong>Number of results: {filteredProperties?.length}</strong></p>
       {filteredProperties?.length > 0 ? (
         filteredProperties.map((property, index) => (
@@ -16,11 +20,10 @@ const PropertySearchPage = ({ filteredProperties, handleDetails }) => {
                 <Card.Subtitle className="mb-2 text-muted" style={{fontStyle: 'italic'}}>
                  {property.street}
                 </Card.Subtitle>
-                <Card.Link
-                onClick={(e) => {
-                      e.preventDefault(); 
-                      handleDetails(property.project, property.street)}}>
-                        More Details</Card.Link>
+                <Link to="/detail"
+                 onClick={() => handleDetails(property.project, property.street)}
+                >
+                        More Details</Link>
               </Card.Body>
             </Card>
           </div>

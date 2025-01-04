@@ -14,7 +14,7 @@ const Navbar = () => {
             <Link to="/">Search Properties</Link>
           </li>
           <li className="menu-item">
-            <Link to="/">Compare Properties (Coming soon)</Link>
+            <Link to="/favorites">Favorites</Link>
           </li>
         </ul>
       </nav>
