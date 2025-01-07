@@ -2,7 +2,7 @@ const URA_API_KEY = `${import.meta.env.VITE_URA_API_KEY}`;
 
 const getToken = async () => {
         try {
-          const res = await fetch("/token", {
+          const res = await fetch("https://www.ura.gov.sg/uraDataService/insertNewToken.action", {
             headers: {
               AccessKey: URA_API_KEY,
               "Content-Type": "application/json"

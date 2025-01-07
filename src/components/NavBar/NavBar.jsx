@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import './NavBar.css'
+import FavoriteProperties from '../FavouriteProperties/FavoriteProperties';
 
-const Navbar = () => {
+const Navbar = ({favorites}) => {
     return (
       <nav className="navbar">
         <div className="navbar-logo">
@@ -14,7 +15,7 @@ const Navbar = () => {
             <Link to="/">Search Properties</Link>
           </li>
           <li className="menu-item">
-            <Link to="/favorites">Favorites</Link>
+            <Link to="/favorites">Favorites ({favorites?.length})</Link>
           </li>
         </ul>
       </nav>

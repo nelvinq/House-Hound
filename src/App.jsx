@@ -5,7 +5,6 @@ import * as propertySalesData from "./services/propertySalesData";
 import * as getToken from "./services/getToken";
 import NavBar from "./components/NavBar/NavBar";
 import Footer from "./components/Footer/Footer";
-import PropertySearchBar from "./components/PropertySearchBar";
 import PropertySearchPage from "./components/PropertySearchPage";
 import PropertyDetails from "./components/PropertyDetails/PropertyDetails";
 import FavoriteProperties from "./components/FavouriteProperties/FavoriteProperties";
@@ -42,8 +41,17 @@ function App() {
             ...property,
             id: index + 1,
           }));
-          setProperties(indexedData);
-          setFilteredProperties(indexedData);
+          const sortedData = indexedData.sort((a, b) => {
+            if (a.project < b.project) {
+              return -1;
+            }
+            if (a.project > b.project) {
+              return 1;
+            }
+            return 0;
+          });
+          setProperties(sortedData);
+          setFilteredProperties(sortedData);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -92,7 +100,7 @@ function App() {
   const isFavorite = (propertyId) =>
     favorites.some((fav) => fav.id === propertyId);
 
-  // Console.log for checking - to remove
+  // Console.log for checking - to remove before project submission
   useEffect(() => {
     console.log("Updated properties:", properties);
   }, [properties]);
@@ -115,10 +123,10 @@ function App() {
 
   return (
     <>
-      <NavBar />
+      <NavBar favorites={favorites}/>
       <div className="body">
       <Routes>
-        <Route path="/" element={<PropertySearchPage filteredProperties={filteredProperties} handleDetails={handleDetails} />} />
+        <Route path="/" element={<PropertySearchPage filteredProperties={filteredProperties} handleDetails={handleDetails} searchQuery={searchQuery} handleSearch={handleSearch}/>} />
         <Route path='/detail' element={<PropertyDetails propertyDetails={propertyDetails} handleAddFavorite={handleAddFavorite}
         handleRemoveFavorite={handleRemoveFavorite}
         isFavorite={isFavorite}/>}/>
