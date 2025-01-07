@@ -4,7 +4,7 @@ House Hound is a user-friendly web app designed to assist prospective homebuyers
 # 🚀 Getting Started
 Click the link: https://house-hound-8vwn0lk7u-nelvinqs-projects.vercel.app/
 
-# Instructions
+# 📋 Instructions
 1. Use the search bar to explore private properties.
 2. Save your favorites, view transaction details, and compare options.
 
