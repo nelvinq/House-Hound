@@ -9,11 +9,11 @@ Click the link: https://house-hound-8vwn0lk7u-nelvinqs-projects.vercel.app/
 2. Save your favorites, view transaction details, and compare options.
 
 # 💻 Technologies Used
-1. React JS - 
-2. React Bootstrap - 
+1. React JS - For building the front end.
+2. React Bootstrap - For a sleek design with pre-built components.
 3. Git & GitHub - For version control and collaboration.
-4. API Integration - Property Transaction API from Urban Redevelopment Authority (URA)
-5. Planning & Design Tools - https://www.figma.com/design/fKBI7sJjzzcLDqaCcCB5oH/Coding-Projects?node-id=11-2
+4. API Integration - Property Transaction API from Urban Redevelopment Authority (URA). https://www.ura.gov.sg/maps/api/#introduction
+5. Planning & Design Tools - Figma Design Project for wireframing and prototyping the app interface. https://www.figma.com/design/fKBI7sJjzzcLDqaCcCB5oH/Coding-Projects?node-id=11-2
 
 # 🚧 Future Enhancements
 1. Filters to shortlist properties better
