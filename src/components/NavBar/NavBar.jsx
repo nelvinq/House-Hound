@@ -7,7 +7,7 @@ const Navbar = ({favorites}) => {
       <nav className="navbar">
         <div className="navbar-logo">
           <Link to="/">
-            <img src="https://static.wixstatic.com/media/3ec94b_02f00099be0a4b93af7b06242a69a6d0~mv2.png" alt="Logo" className="logo" />
+            <img src="https://static.wixstatic.com/media/3ec94b_02f00099be0a4b93af7b06242a69a6d0~mv2.png" alt="Logo of HouseHound" className="logo" />
           </Link>
         </div>
         <ul className="navbar-menu">

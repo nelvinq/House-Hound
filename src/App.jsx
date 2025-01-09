@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import * as propertySalesData from "./services/propertySalesData";
 import * as getToken from "./services/getToken";
