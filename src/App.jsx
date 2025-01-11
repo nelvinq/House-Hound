@@ -23,7 +23,6 @@ function App() {
         try {
           const data = await getToken.getToken();
           setToken(data);
-          console.log("Updated token:", token);
         } catch (error) {
           console.error("Error fetching data:", error);
         }
@@ -100,30 +99,11 @@ function App() {
   const isFavorite = (propertyId) =>
     favorites.some((fav) => fav.id === propertyId);
 
-  // Console.log for checking - to remove before project submission
-  useEffect(() => {
-    console.log("Updated properties:", properties);
-  }, [properties]);
-
-  useEffect(() => {
-    console.log("Updated properties:", filteredProperties);
-  }, [filteredProperties]);
-
-  useEffect(() => {
-    console.log("Updated token:", token);
-  }, [token]);
-
-  useEffect(() => {
-    console.log("Updated property details:", propertyDetails);
-  }, [propertyDetails]);
-
-  useEffect(() => {
-    console.log("Updated favorites:", favorites);
-  }, [favorites]);
-
   return (
     <>
       <NavBar favorites={favorites}/>
+      <div>
+      </div>
       <div className="body">
       <Routes>
         <Route path="/" element={<PropertySearchPage filteredProperties={filteredProperties} handleDetails={handleDetails} searchQuery={searchQuery} handleSearch={handleSearch}/>} />

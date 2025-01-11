@@ -8,7 +8,7 @@ const PropertySearchResult = ({ filteredProperties, handleDetails}) => {
     <p><strong>Number of results: {filteredProperties?.length}</strong></p>
       {filteredProperties?.length > 0 ? (
         filteredProperties.map((property, index) => (
-          <div>
+          <div key={property.id}>
             <Card style={{ width: "100%", padding:"10px", borderBottom: "1px solid #ccc"}}>
               <Card.Body>
                 <Card.Title style={{fontWeight:"bold"}}>{property.project}</Card.Title>
